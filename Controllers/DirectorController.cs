@@ -48,5 +48,22 @@ namespace MoviesAPI.Controllers
             
             return picture;
         }
+
+        // GET: /directorByMovie?nameMovie=5
+        [HttpGet]
+        [Route("directorByMovie")]
+        public Director GetDirectorByMovie(string nameMovie)
+        {
+            DirectorDAO directorDAO = new DirectorDAO();
+            Director director = directorDAO.SelectDirectorByMovie(nameMovie).FirstOrDefault();
+
+            if(director == null)
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.NotFound);
+                throw new HttpResponseException(resp);
+            }
+
+            return director;
+        }
     }
 }

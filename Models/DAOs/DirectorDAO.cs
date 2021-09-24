@@ -11,6 +11,16 @@ namespace MoviesAPI.Models
     {
         public Database db;
 
+        public List<Director> SelectDirectorByMovie(string nameMovie)
+        {
+            using (db = new Database())
+            {
+                var strQuery = string.Format("SELECT * FROM Diretor WHERE ID_D = (SELECT ID_D FROM Filme WHERE Nome = '{0}')", nameMovie);
+                var queryReturn = db.ReturnCommand(strQuery);
+                return ListDirector(queryReturn);
+            }
+        }
+
         public string SelectPicture(int id)
         {
             using (db = new Database())
